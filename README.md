@@ -51,3 +51,7 @@ Modern, responsive personal portfolio showcasing my journey as an **MCA Student*
 PUBLIC_KEY: "your_key",
 SERVICE_ID: "your_service_id",
 TEMPLATE_ID: "your_template_id"
+
+
+
+YOUR_PORTFOLIO_URL → https://your-site.netlify.app
