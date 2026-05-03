@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Rahul E | Full Stack Developer Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0c10;
+      color: #eef2ff;
+      line-height: 1.6;
+      transition: background 0.3s ease, color 0.2s ease;
+      scroll-behavior: smooth;
+    }
+
+    body.light {
+      background: #f4f7fc;
+      color: #1e293b;
+    }
+
+    body.light .navbar,
+    body.light .project-card,
+    body.light .contact-form form,
+    body.light .skill-category,
+    body.light .cert-card {
+      background: #ffffff;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+
+    body.light .navbar {
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    body.light .logo span { color: #2563eb; }
+    body.light .nav-links a { color: #1e293b; }
+    body.light .hero-badge { background: #e0e7ff; color: #1e40af; }
+    body.light .btn-outline { border-color: #2563eb; color: #2563eb; }
+    body.light .btn-outline:hover { background: #2563eb; color: white; }
+    body.light .skill-badges span { background: #e2e8f0; color: #0f172a; }
+    body.light .contact-item a, body.light .contact-item span { color: #2563eb; }
+    body.light footer { background: #eef2ff; color: #334155; }
+    body.light .cert-card { border: 1px solid #e2e8f0; }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(14px);
+      background: rgba(10, 12, 16, 0.85);
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: all 0.3s;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo span { color: #3b82f6; }
+
+    .nav-links ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #eef2ff;
+      transition: color 0.3s;
+      font-size: 1rem;
+    }
+
+    .nav-links a:hover { color: #3b82f6; }
+
+    .nav-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    #theme-toggle {
+      background: transparent;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: inherit;
+      transition: transform 0.2s;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 2px;
+      background: currentColor;
+      transition: 0.3s;
+    }
+
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      padding: 4rem 0;
+    }
+
+    .hero-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-content { flex: 1; }
+    .hero-badge {
+      background: rgba(59,130,246,0.2);
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #60a5fa;
+    }
+
+    h1 { font-size: 4rem; font-weight: 800; margin: 0.5rem 0; letter-spacing: -1px; }
+    .typed-wrapper {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .cursor {
+      animation: blink 1s infinite;
+      font-weight: 300;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero p { font-size: 1.1rem; color: #94a3b8; margin: 1rem 0 2rem; max-width: 550px; }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.8rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.25s ease;
+      cursor: pointer;
+      border: none;
+      font-size: 0.95rem;
+    }
+    .btn-primary {
+      background: #3b82f6;
+      color: white;
+      box-shadow: 0 4px 14px rgba(59,130,246,0.4);
+    }
+    .btn-primary:hover { background: #2563eb; transform: translateY(-3px); }
+    .btn-outline {
+      border: 1.5px solid #3b82f6;
+      color: #3b82f6;
+      background: transparent;
+    }
+    .btn-outline:hover { background: #3b82f6; color: white; transform: translateY(-2px); }
+    .btn-resume { background: #2d3748; color: white; border: none; }
+    .btn-resume:hover { background: #1e293b; transform: translateY(-2px); }
+    .btn-linkedin { background: #0a66c2; color: white; border: none; }
+    .btn-linkedin:hover { background: #004182; transform: translateY(-2px); }
+    .btn-view-all {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      margin-top: 2rem;
+    }
+    .btn-view-all:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px -5px rgba(102, 126, 234, 0.4);
+    }
+
+    .hero-image {
+      flex: 0.8;
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    .code-icon { font-size: 12rem; color: #3b82f6; opacity: 0.7; animation: float 4s infinite; }
+    @keyframes float { 0%{transform:translateY(0px)} 50%{transform:translateY(-15px)} 100%{transform:translateY(0px)} }
+
+    section { padding: 5rem 0; }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-header h2 { font-size: 2.5rem; font-weight: 700; }
+    .underline {
+      width: 70px;
+      height: 4px;
+      background: linear-gradient(90deg, #3b82f6, #a855f7);
+      margin: 0.5rem auto 0;
+      border-radius: 4px;
+    }
+
+    .about-content { max-width: 800px; margin: 0 auto; text-align: center; }
+    .about-text p { margin-bottom: 1.2rem; font-size: 1.1rem; color: #cbd5e1; }
+    body.light .about-text p { color: #334155; }
+    .about-stats { display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; flex-wrap: wrap; }
+
+    /* Fixed Skills Grid - Better Alignment */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1rem;
+    }
+    .skill-category {
+      background: #11161f;
+      padding: 1.8rem;
+      border-radius: 28px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .skill-category:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -12px rgba(0,0,0,0.3); }
+    .skill-category h3 { 
+      margin-bottom: 1.2rem; 
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px solid rgba(59,130,246,0.3);
+      padding-bottom: 0.5rem;
+    }
+    .skill-badges { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 0.8rem;
+    }
+    .skill-badges span {
+      background: #1e2a3a;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .skill-badges span:hover { background: #3b82f6; color: white; transform: scale(1.02); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .project-card {
+      background: #11161f;
+      border-radius: 28px;
+      padding: 1.8rem;
+      transition: all 0.3s ease;
+      text-align: center;
+      backdrop-filter: blur(2px);
+    }
+    .project-card:hover { transform: translateY(-8px); box-shadow: 0 25px 35px -12px rgba(0,0,0,0.4); }
+    .card-icon { font-size: 2.8rem; color: #3b82f6; margin-bottom: 1rem; }
+    .project-card h3 { margin-bottom: 0.8rem; font-size: 1.4rem; }
+    .project-card p { color: #94a3b8; margin-bottom: 1.5rem; font-size: 0.95rem; }
+    .project-links { display: flex; justify-content: center; gap: 1.2rem; }
+    .card-link {
+      text-decoration: none;
+      font-weight: 600;
+      color: #3b82f6;
+      transition: 0.2s;
+    }
+    .card-link.demo { color: #a78bfa; }
+    .card-link:hover { letter-spacing: 0.3px; }
+
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1rem;
+    }
+    .cert-card {
+      background: #11161f;
+      border-radius: 20px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+    }
+    .cert-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -12px rgba(0,0,0,0.3); }
+    .cert-icon { font-size: 2.5rem; color: #3b82f6; }
+    .cert-info h3 { font-size: 1.1rem; margin-bottom: 0.3rem; }
+    .cert-info p { font-size: 0.85rem; color: #94a3b8; }
+    .cert-verify { font-size: 0.75rem; color: #60a5fa; margin-top: 0.3rem; display: inline-block; }
+
+    .view-all-container {
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+
+    .cert-badge {
+      display: inline-block;
+      background: rgba(59,130,246,0.2);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      margin-top: 0.5rem;
+      color: #60a5fa;
+    }
+
+    .edu-timeline { max-width: 700px; margin: 0 auto; }
+    .edu-item {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    .edu-dot {
+      width: 14px;
+      height: 14px;
+      background: #3b82f6;
+      border-radius: 50%;
+      margin-top: 0.4rem;
+      position: relative;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.3);
+    }
+    .edu-content { background: #11161f; padding: 1.2rem 1.8rem; border-radius: 20px; flex: 1; }
+    .year { color: #60a5fa; font-weight: 500; display: block; margin: 5px 0; }
+
+    .contact-wrapper { display: flex; flex-wrap: wrap; gap: 3rem; justify-content: center; }
+    .contact-info { flex: 1; min-width: 240px; }
+    .contact-item { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.8rem; }
+    .contact-item i { font-size: 1.8rem; color: #3b82f6; width: 40px; }
+    .contact-item a, .contact-item span { color: #93c5fd; text-decoration: none; transition: 0.2s; }
+    .contact-item a:hover { color: #3b82f6; transform: translateX(3px); display: inline-block; }
+    .contact-form { flex: 1; background: #11161f; padding: 2rem; border-radius: 32px; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      background: #1e293b;
+      border: 1px solid #2d3a4e;
+      border-radius: 28px;
+      color: #f1f5f9;
+      font-family: inherit;
+      transition: 0.2s;
+    }
+    body.light .form-group input, body.light .form-group textarea {
+      background: #f1f5f9;
+      color: #0f172a;
+      border-color: #cbd5e1;
+    }
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #3b82f6; }
+    .submit-btn { 
+      width: 100%; 
+      justify-content: center; 
+      margin-top: 0.5rem; 
+      background: #2563eb;
+      position: relative;
+    }
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .form-feedback { margin-top: 1rem; font-size: 0.85rem; text-align: center; }
+    .form-feedback.success { color: #10b981; }
+    .form-feedback.error { color: #ef4444; }
+    .form-feedback.loading { color: #f59e0b; }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
+
+    @media (max-width: 850px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.active { display: block; position: absolute; top: 70px; left: 0; width: 100%; background: rgba(10,12,16,0.98); backdrop-filter: blur(12px); padding: 1.5rem; text-align: center; }
+      .nav-links.active ul { flex-direction: column; gap: 1.2rem; }
+      .hero-container { flex-direction: column; text-align: center; }
+      h1 { font-size: 3rem; }
+      .hero-buttons { justify-content: center; }
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 550px) {
+      .container { padding: 0 1.3rem; }
+      .section-header h2 { font-size: 2rem; }
+    }
+    body.light .nav-links.active { background: rgba(255,255,255,0.98); }
+    body.light .skill-category, body.light .project-card, body.light .edu-content, body.light .contact-form, body.light .cert-card { background: #ffffff; border: 1px solid #e2e8f0; }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo">Rahul<span> E</span></a>
+      <nav class="nav-links" id="navLinks">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#certifications">Certifications</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <button id="theme-toggle" aria-label="Dark/Light mode"><i class="fas fa-moon"></i></button>
+        <div class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container hero-container">
+        <div class="hero-content" data-aos="fade-up">
+          <div class="hero-badge">Hello, I'm</div>
+          <h1>Rahul E</h1>
+          <div class="typed-wrapper"><span id="typed-text"></span><span class="cursor">|</span></div>
+          <p>Problem solver & creative developer building real-world solutions. Turning ideas into robust, scalable web applications.</p>
+          <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">View Projects <i class="fas fa-arrow-right"></i></a>
+            <a href="#contact" class="btn btn-outline">Contact Me</a>
+            <a href="#" id="resumeBtn" class="btn btn-resume"><i class="fas fa-download"></i> Resume</a>
+            <a href="https://www.linkedin.com/in/rahul-e-30542a28a/" target="_blank" class="btn btn-linkedin"><i class="fab fa-linkedin"></i> LinkedIn</a>
+          </div>
+        </div>
+        <div class="hero-image" data-aos="fade-left">
+          <div class="code-icon"><i class="fas fa-laptop-code"></i></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up"><h2>About Me</h2><div class="underline"></div></div>
+        <div class="about-content" data-aos="fade-up">
+          <div class="about-text">
+            <p>Computer Applications student with strong foundations in Java, Python, and Full Stack web development. Passionate about problem-solving and building real-world projects.</p>
+            <p>Currently pursuing MCA to deepen my expertise in scalable systems. I love crafting elegant frontends and robust backends that deliver impact.</p>
+            <div class="about-stats"><div>🎓 MCA Candidate</div><div>💻 Full Stack Enthusiast</div><div>⚡ 10+ Projects Built</div><div>📜 30+ Certifications</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="skills">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up"><h2>Technical Arsenal</h2><div class="underline"></div></div>
+        <div class="skills-grid">
+          <div class="skill-category" data-aos="zoom-in">
+            <h3><i class="fas fa-code"></i> Programming Languages</h3>
+            <div class="skill-badges">
+              <span>Python</span>
+              <span>Java</span>
+              <span>C</span>
+              <span>C++</span>
+              <span>PHP</span>
+              <span>C#</span>
+              <span>JavaScript</span>
+            </div>
+          </div>
+          
+          <div class="skill-category" data-aos="zoom-in" data-aos-delay="50">
+            <h3><i class="fas fa-globe"></i> Web Technologies</h3>
+            <div class="skill-badges">
+              <span>HTML5</span>
+              <span>CSS3</span>
+              <span>JavaScript</span>
+              <span>React.js</span>
+              <span>Node.js</span>
+              <span>Bootstrap</span>
+              <span>Tailwind CSS</span>
+            </div>
+          </div>
+          
+          <div class="skill-category" data-aos="zoom-in" data-aos-delay="100">
+            <h3><i class="fas fa-cube"></i> Frameworks & Libraries</h3>
+            <div class="skill-badges">
+              <span>Spring Boot</span>
+              <span>.NET Core</span>
+              <span>Express.js</span>
+              <span>Flask</span>
+              <span>Django</span>
+              <span>Hibernate</span>
+            </div>
+          </div>
+          
+          <div class="skill-category" data-aos="zoom-in" data-aos-delay="150">
+            <h3><i class="fas fa-database"></i> Database Technologies</h3>
+            <div class="skill-badges">
+              <span>MySQL</span>
+              <span>PostgreSQL</span>
+              <span>MongoDB</span>
+              <span>SQLite</span>
+              <span>Oracle DB</span>
+              <span>Firebase</span>
+            </div>
+          </div>
+          
+          <div class="skill-category" data-aos="zoom-in" data-aos-delay="200">
+            <h3><i class="fas fa-tools"></i> Tools & DevOps</h3>
+            <div class="skill-badges">
+              <span>Git & GitHub</span>
+              <span>GitLab</span>
+              <span>Docker</span>
+              <span>Jenkins</span>
+              <span>JUnit</span>
+              <span>Postman</span>
+              <span>VS Code</span>
+              <span>Eclipse</span>
+              <span>IntelliJ IDEA</span>
+            </div>
+          </div>
+          
+          <div class="skill-category" data-aos="zoom-in" data-aos-delay="250">
+            <h3><i class="fas fa-chart-line"></i> Automation & Others</h3>
+            <div class="skill-badges">
+              <span>Excel (Advanced)</span>
+              <span>OpenPyXL</span>
+              <span>Selenium</span>
+              <span>JIRA</span>
+              <span>Agile/Scrum</span>
+              <span>REST APIs</span>
+              <span>Linux/Unix</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="projects">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up"><h2>Featured Projects</h2><div class="underline"></div></div>
+        <div class="projects-grid">
+          <div class="project-card" data-aos="flip-left">
+            <div class="card-icon"><i class="fas fa-gas-pump"></i></div>
+            <h3>Fuel Station Monitoring System</h3>
+            <p>Java + MySQL solution for billing automation, real-time stock management, and sales analytics with inventory tracking.</p>
+            <div class="project-links">
+              <a href="https://github.com/Rahul01032005/Fuel_Station_Monitoring_System" class="card-link">GitHub <i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-card" data-aos="flip-left" data-aos-delay="100">
+            <div class="card-icon"><i class="fas fa-vote-yea"></i></div>
+            <h3>Online Voting Portal</h3>
+            <p>PHP + MySQL secure web app with OTP authentication, vote encryption, real-time result dashboard, and admin panel.</p>
+            <div class="project-links">
+              <a href="https://github.com/Rahul01032005/ONLINE_VOTING_PORTAL_COMPLETE" class="card-link">GitHub <i class="fab fa-github"></i></a>
+              <a href="https://online--voting.page.gd" class="card-link demo">Live Demo →</a>
+            </div>
+          </div>
+          <div class="project-card" data-aos="flip-left" data-aos-delay="200">
+            <div class="card-icon"><i class="fas fa-bread-slice"></i></div>
+            <h3>Bakery Management System</h3>
+            <p>Excel automation using OpenPyXL (Python) reducing manual workload by 70%. Inventory, orders, and daily sales reports.</p>
+            <div class="project-links">
+              <a href="https://github.com/Rahul01032005/Bakery-management-system" class="card-link">GitHub <i class="fab fa-github"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications" class="certifications">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up">
+          <h2>Certifications</h2>
+          <div class="underline"></div>
+          <p style="margin-top: 1rem; color: #94a3b8;">Showcasing 30+ professional certifications</p>
+        </div>
+        <div class="certs-grid">
+          <!-- Certificate 1 - Data Analysis -->
+          <div class="cert-card" data-aos="zoom-in" onclick="window.open('https://drive.google.com/file/d/1XBb08gCFB94brKylgeayu6XoUb1OBzba/view?usp=drive_link', '_blank')">
+            <div class="cert-icon"><i class="fab fa-python"></i></div>
+            <div class="cert-info">
+              <h3>Data Analysis Using Python</h3>
+              <p>Google Coursera | 2026</p>
+              <span class="cert-verify">Click to Verify →</span>
+              <div class="cert-badge"><i class="fas fa-certificate"></i> Verified</div>
+            </div>
+          </div>
+          
+          <!-- Certificate 2 - Java -->
+          <div class="cert-card" data-aos="zoom-in" data-aos-delay="50" onclick="window.open('https://drive.google.com/file/d/1CwGnf0M6pvPp0u217t1-lXgESksI1z3v/view?usp=drive_link', '_blank')">
+            <div class="cert-icon"><i class="fab fa-java"></i></div>
+            <div class="cert-info">
+              <h3>Java Business Application</h3>
+              <p>IIT Bombay | 2026</p>
+              <span class="cert-verify">Click to Verify →</span>
+              <div class="cert-badge"><i class="fas fa-certificate"></i> Verified</div>
+            </div>
+          </div>
+          
+          <!-- Certificate 3 - SAP -->
+          <div class="cert-card" data-aos="zoom-in" data-aos-delay="100" onclick="window.open('https://drive.google.com/file/d/1uCEafO3aZyECnamO4N_7RuA6EqOvCfA5/view?usp=drive_link', '_blank')">
+            <div class="cert-icon"><i class="fas fa-cloud"></i></div>
+            <div class="cert-info">
+              <h3>SAP Business Data Cloud</h3>
+              <p>SAP | 2025</p>
+              <span class="cert-verify">Click to Verify →</span>
+              <div class="cert-badge"><i class="fas fa-certificate"></i> Verified</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- View All Certificates Button -->
+        <div class="view-all-container" data-aos="fade-up" data-aos-delay="150">
+          <a href="https://drive.google.com/drive/folders/1bfVVi6UcJsdFVcgdm85ccH4XGon4kXh3?usp=drive_link" target="_blank" class="btn btn-view-all">
+            <i class="fas fa-folder-open"></i> View All Certificates
+            <i class="fas fa-arrow-right"></i>
+          </a>
+          <p style="margin-top: 1rem; font-size: 0.85rem; color: #94a3b8;">
+            <i class="fas fa-cloud"></i> Stored in my Google Drive - All certifications including Python, Java, Web Dev, Cloud, and more!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="education" class="education">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up"><h2>Academic Journey</h2><div class="underline"></div></div>
+        <div class="edu-timeline">
+          <div class="edu-item" data-aos="fade-right">
+            <div class="edu-dot"></div>
+            <div class="edu-content">
+              <h3>Master of Computer Applications (MCA)</h3>
+              <span class="year">2025 – 2027</span>
+              <p>Mangalore University | Full Stack & Cloud Computing Specialization</p>
+            </div>
+          </div>
+          <div class="edu-item" data-aos="fade-right" data-aos-delay="100">
+            <div class="edu-dot"></div>
+            <div class="edu-content">
+              <h3>Bachelor of Computer Applications (BCA)</h3>
+              <span class="year">2022 – 2025</span>
+              <p>VTU University | CGPA: 9.31 · Academic Excellence Award</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="section-header" data-aos="fade-up"><h2>Let's Connect</h2><div class="underline"></div></div>
+        <div class="contact-wrapper">
+          <div class="contact-info" data-aos="fade-right">
+            <div class="contact-item"><i class="fas fa-envelope"></i><div><h4>Email</h4><a href="mailto:rahul01032005@gmail.com">rahul01032005@gmail.com</a></div></div>
+            <div class="contact-item"><i class="fab fa-github"></i><div><h4>GitHub</h4><a href="https://github.com/Rahul01032005" target="_blank">github.com/Rahul01032005</a></div></div>
+            <div class="contact-item"><i class="fab fa-linkedin"></i><div><h4>LinkedIn</h4><a href="https://www.linkedin.com/in/rahul-e-30542a28a/" target="_blank">linkedin.com/in/rahul-e</a></div></div>
+            <div class="contact-item"><i class="fas fa-phone-alt"></i><div><h4>Phone</h4><span>+91 76195 33115</span></div></div>
+          </div>
+          <div class="contact-form" data-aos="fade-left">
+            <form id="contactForm">
+              <div class="form-group"><input type="text" id="formName" placeholder="Your Name" required></div>
+              <div class="form-group"><input type="email" id="formEmail" placeholder="Your Email" required></div>
+              <div class="form-group"><textarea id="formMsg" rows="4" placeholder="Your Message" required></textarea></div>
+              <button type="submit" class="btn btn-primary submit-btn" id="sendBtn">Send Message <i class="fas fa-paper-plane"></i></button>
+              <p id="feedbackMsg" class="form-feedback"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="container footer-content"><p>© 2025 Rahul E — Crafted with <i class="fas fa-heart"></i> for modern web | 30+ Certifications</p></div></footer>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true, offset: 40 });
+
+    // Typing Animation
+    const roles = ["MCA Student", "Full Stack Developer", "Problem Solver", "Tech Enthusiast"];
+    let roleIndex = 0, charIndex = 0;
+    const typedSpan = document.getElementById("typed-text");
+    function typeEffect() {
+      if (charIndex < roles[roleIndex].length) {
+        typedSpan.textContent += roles[roleIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeEffect, 100);
+      } else {
+        setTimeout(eraseEffect, 2000);
+      }
+    }
+    function eraseEffect() {
+      if (charIndex > 0) {
+        typedSpan.textContent = roles[roleIndex].substring(0, charIndex-1);
+        charIndex--;
+        setTimeout(eraseEffect, 50);
+      } else {
+        roleIndex = (roleIndex + 1) % roles.length;
+        setTimeout(typeEffect, 300);
+      }
+    }
+    typeEffect();
+
+    // Dark/Light Toggle
+    const toggleBtn = document.getElementById("theme-toggle");
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+      const icon = toggleBtn.querySelector("i");
+      if (document.body.classList.contains("light")) {
+        icon.classList.remove("fa-moon");
+        icon.classList.add("fa-sun");
+      } else {
+        icon.classList.remove("fa-sun");
+        icon.classList.add("fa-moon");
+      }
+    });
+
+    // Mobile Menu
+    const hamburger = document.getElementById("hamburger");
+    const navLinks = document.getElementById("navLinks");
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+    document.querySelectorAll(".nav-links a").forEach(link => {
+      link.addEventListener("click", () => navLinks.classList.remove("active"));
+    });
+
+    // Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener("click", function(e) {
+        const targetId = this.getAttribute("href");
+        if (targetId === "#" || targetId === "") return;
+        const targetElem = document.querySelector(targetId);
+        if (targetElem) {
+          e.preventDefault();
+          targetElem.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
+    // Resume Download
+    const resumeBtn = document.getElementById("resumeBtn");
+    resumeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const dummyContent = "RAHUL E\nMCA Student | Full Stack Developer\nEmail: rahul01032005@gmail.com\n\nSKILLS:\nProgramming: Python, Java, C, C++, PHP, C#, JavaScript\nWeb: HTML5, CSS3, React.js, Node.js, Bootstrap\nFrameworks: Spring Boot, .NET Core, Flask, Django\nDatabase: MySQL, PostgreSQL, MongoDB, Firebase\nTools: Git, Docker, Jenkins, Postman, JIRA\n\nPROJECTS:\n• Fuel Station Monitoring System (Java + MySQL)\n• Online Voting Portal (PHP + MySQL)\n• Bakery Management System (Python + OpenPyXL)\n\nEDUCATION:\n• MCA - Mangalore University (2025-2027)\n• BCA - VTU University (2022-2025) | CGPA: 9.31\n\nCERTIFICATIONS (30+):\n• Data Analysis Using Python - Google Coursera\n• Java Business Application - IIT Bombay\n• SAP Business Data Cloud - SAP\n• And 27+ more certifications available in Google Drive";
+      const blob = new Blob([dummyContent], {type: "application/pdf"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Rahul_E_Resume.pdf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    // EmailJS Configuration
+    const EMAILJS_CONFIG = {
+      PUBLIC_KEY: "XoapjCMHyYXHiVD0S",
+      SERVICE_ID: "service_rqoh1nl",
+      TEMPLATE_ID: "template_nlsppqk"
+    };
+
+    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+
+    const contactForm = document.getElementById("contactForm");
+    const feedback = document.getElementById("feedbackMsg");
+    const sendBtn = document.getElementById("sendBtn");
+
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById("formName").value.trim();
+      const email = document.getElementById("formEmail").value.trim();
+      const message = document.getElementById("formMsg").value.trim();
+      
+      if (!name || !email || !message) {
+        showFeedback("⚠️ Please fill in all fields.", "error");
+        return;
+      }
+      
+      if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        showFeedback("⚠️ Please enter a valid email address.", "error");
+        return;
+      }
+      
+      sendBtn.disabled = true;
+      sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+      showFeedback("📤 Sending your message...", "loading");
+      
+      try {
+        const templateParams = {
+          to_email: "rahulemca2025@gmail.com",
+          name: name,
+          email: email,
+          message: message,
+          reply_to: email
+        };
+        
+        await emailjs.send(
+          EMAILJS_CONFIG.SERVICE_ID,
+          EMAILJS_CONFIG.TEMPLATE_ID,
+          templateParams
+        );
+        
+        showFeedback("✨ Thanks, " + name + "! Your message has been sent. I'll reply soon!", "success");
+        contactForm.reset();
+        
+      } catch (error) {
+        console.error("Email sending failed:", error);
+        showFeedback("❌ Failed to send message. Please try again later or email me directly.", "error");
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.innerHTML = 'Send Message <i class="fas fa-paper-plane"></i>';
+        setTimeout(() => {
+          if (feedback.innerHTML.includes("Thanks") || feedback.innerHTML.includes("Failed")) {
+            setTimeout(() => feedback.innerHTML = "", 5000);
+          }
+        }, 1000);
+      }
+    });
+    
+    function showFeedback(message, type) {
+      feedback.innerHTML = message;
+      feedback.className = `form-feedback ${type}`;
+    }
+  </script>
+</body>
+</html>
